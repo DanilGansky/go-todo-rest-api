@@ -1,4 +1,4 @@
-package models
+package pg
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"github.com/danikg/go-todo-rest-api/internal/config"
+	"github.com/danikg/go-todo-rest-api/internal/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -27,7 +28,7 @@ func GetDB(cfg *config.Config) *gorm.DB {
 			log.Fatal("failed to connect db")
 		}
 
-		db.AutoMigrate(&User{}, &TodoList{}, &TodoItem{}, &Tag{})
+		db.AutoMigrate(&models.User{}, &models.TodoList{}, &models.TodoItem{}, &models.Tag{})
 	})
 	return db
 }

@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/danikg/go-todo-rest-api/internal/app/pg"
 	"github.com/danikg/go-todo-rest-api/internal/config"
-	"github.com/danikg/go-todo-rest-api/internal/models"
 	"github.com/gorilla/mux"
 
 	tagHttp "github.com/danikg/go-todo-rest-api/internal/tag/controller/http"
@@ -24,19 +24,19 @@ import (
 
 // App ...
 type App struct {
-	Config *config.Config
+	config *config.Config
 }
 
 // NewApp ...
 func NewApp() *App {
 	return &App{
-		Config: config.GetConfig(),
+		config: config.GetConfig(),
 	}
 }
 
 // Run ...
 func (a *App) Run() {
-	db := models.GetDB(a.Config)
+	db := pg.GetDB(a.config)
 	router := mux.NewRouter()
 
 	userRepo := userRepo.NewUserRepository(db)
@@ -59,7 +59,7 @@ func (a *App) Run() {
 	tagController := tagHttp.NewTagController(tagService)
 	tagHttp.SetupRoutes(router, tagController)
 
-	addr := a.Config.AppHost + ":" + a.Config.AppPort
+	addr := a.config.AppHost + ":" + a.config.AppPort
 	log.Printf("starting at %s...", addr)
 	http.ListenAndServe(addr, router)
 }
