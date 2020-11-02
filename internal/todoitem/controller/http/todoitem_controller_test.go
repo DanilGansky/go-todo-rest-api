@@ -2,11 +2,11 @@ package http
 
 import (
 	"encoding/json"
-	"errors"
 	. "net/http"
 	"testing"
 
 	"github.com/danikg/go-todo-rest-api/internal/models"
+	"github.com/danikg/go-todo-rest-api/internal/todoitem/service"
 	"github.com/danikg/go-todo-rest-api/internal/utils/test"
 	"github.com/stretchr/testify/assert"
 )
@@ -21,57 +21,6 @@ type todoItemTest struct {
 	statusCode      int
 	todoItemResult  models.TodoItem
 	todoItemsResult []models.TodoItem
-}
-
-type todoItemServiceMock struct{}
-
-func (s *todoItemServiceMock) GetAll(listID uint) ([]models.TodoItem, error) {
-	if listID != 1 {
-		return []models.TodoItem{}, errors.New("err")
-	}
-
-	todoItems := []models.TodoItem{
-		{Title: "item1", Description: ""},
-		{Title: "item2", Description: "desc2"},
-	}
-
-	todoItems[0].ID = 1
-	todoItems[1].ID = 2
-	return todoItems, nil
-}
-
-func (s *todoItemServiceMock) GetSingle(id uint) (models.TodoItem, error) {
-	if id != 1 {
-		return models.TodoItem{}, errors.New("not found")
-	}
-
-	todoItem := models.TodoItem{Title: "item1", Description: ""}
-	todoItem.ID = 1
-	return todoItem, nil
-}
-
-func (s *todoItemServiceMock) Create(listID uint, todoItem *models.TodoItem) error {
-	if listID != 1 {
-		return errors.New("err")
-	}
-	return nil
-}
-
-func (s *todoItemServiceMock) Update(id uint, todoItemData *models.TodoItem) (models.TodoItem, error) {
-	if id != 1 {
-		return models.TodoItem{}, errors.New("err")
-	}
-
-	todoItem := models.TodoItem{Title: "item1", Description: ""}
-	todoItem.ID = 1
-	return todoItem, nil
-}
-
-func (s *todoItemServiceMock) Delete(id uint) error {
-	if id != 1 {
-		return errors.New("err")
-	}
-	return nil
 }
 
 func compareTodoItems(t *testing.T, todoItem1 models.TodoItem, todoItem2 models.TodoItem) {
@@ -137,7 +86,7 @@ func TestTodoItemController_GetAll(t *testing.T) {
 		},
 	}
 
-	todoItemController := NewTodoItemController(&todoItemServiceMock{})
+	todoItemController := NewTodoItemController(&service.TodoItemServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoItemResult(t, tc, todoItemController.GetAll)
@@ -190,7 +139,7 @@ func TestTodoItemController_Post(t *testing.T) {
 		},
 	}
 
-	todoItemController := NewTodoItemController(&todoItemServiceMock{})
+	todoItemController := NewTodoItemController(&service.TodoItemServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoItemResult(t, tc, todoItemController.Post)
@@ -231,7 +180,7 @@ func TestTodoItemController_GetSingle(t *testing.T) {
 		},
 	}
 
-	todoItemController := NewTodoItemController(&todoItemServiceMock{})
+	todoItemController := NewTodoItemController(&service.TodoItemServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoItemResult(t, tc, todoItemController.GetSingle)
@@ -284,7 +233,7 @@ func TestTodoItemController_Put(t *testing.T) {
 		},
 	}
 
-	todoItemController := NewTodoItemController(&todoItemServiceMock{})
+	todoItemController := NewTodoItemController(&service.TodoItemServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoItemResult(t, tc, todoItemController.Put)
@@ -320,7 +269,7 @@ func TestTodoItemController_Delete(t *testing.T) {
 		},
 	}
 
-	todoItemController := NewTodoItemController(&todoItemServiceMock{})
+	todoItemController := NewTodoItemController(&service.TodoItemServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoItemResult(t, tc, todoItemController.Delete)

@@ -2,11 +2,11 @@ package http
 
 import (
 	"encoding/json"
-	"errors"
 	. "net/http"
 	"testing"
 
 	"github.com/danikg/go-todo-rest-api/internal/models"
+	"github.com/danikg/go-todo-rest-api/internal/tag/service"
 	"github.com/danikg/go-todo-rest-api/internal/utils/test"
 	"github.com/stretchr/testify/assert"
 )
@@ -21,60 +21,6 @@ type tagTest struct {
 	statusCode int
 	tagResult  models.Tag
 	tagsResult []models.Tag
-}
-
-type tagServiceMock struct{}
-
-func (s *tagServiceMock) GetAll(itemID uint) ([]models.Tag, error) {
-	if itemID != 1 {
-		return []models.Tag{}, errors.New("err")
-	}
-
-	tags := []models.Tag{{Text: "tag1"}, {Text: "tag2"}}
-	tags[0].ID = 1
-	tags[1].ID = 2
-	return tags, nil
-}
-
-func (s *tagServiceMock) GetSingle(id uint) (models.Tag, error) {
-	if id != 1 {
-		return models.Tag{}, errors.New("not found")
-	}
-
-	tag := models.Tag{Text: "tag1"}
-	tag.ID = 1
-	return tag, nil
-}
-
-func (s *tagServiceMock) Create(itemID uint, tag *models.Tag) error {
-	if itemID != 1 {
-		return errors.New("err")
-	}
-	return nil
-}
-
-func (s *tagServiceMock) Update(id uint, tagData *models.Tag) (models.Tag, error) {
-	if id != 1 {
-		return models.Tag{}, errors.New("err")
-	}
-
-	tag := models.Tag{Text: "tag1"}
-	tag.ID = 1
-	return tag, nil
-}
-
-func (s *tagServiceMock) Remove(itemID uint, tagID uint) error {
-	if itemID != 1 {
-		return errors.New("err")
-	}
-	return nil
-}
-
-func (s *tagServiceMock) Delete(id uint) error {
-	if id != 1 {
-		return errors.New("err")
-	}
-	return nil
 }
 
 func compareTags(t *testing.T, expect models.Tag, actual models.Tag) {
@@ -135,7 +81,7 @@ func TestTagController_GetAll(t *testing.T) {
 		},
 	}
 
-	tagController := NewTagController(&tagServiceMock{})
+	tagController := NewTagController(&service.TagServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTagResult(t, tc, tagController.GetAll)
@@ -188,7 +134,7 @@ func TestTagController_Post(t *testing.T) {
 		},
 	}
 
-	tagController := NewTagController(&tagServiceMock{})
+	tagController := NewTagController(&service.TagServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTagResult(t, tc, tagController.Post)
@@ -229,7 +175,7 @@ func TestTagController_GetSingle(t *testing.T) {
 		},
 	}
 
-	tagController := NewTagController(&tagServiceMock{})
+	tagController := NewTagController(&service.TagServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTagResult(t, tc, tagController.GetSingle)
@@ -282,7 +228,7 @@ func TestTagController_Put(t *testing.T) {
 		},
 	}
 
-	tagController := NewTagController(&tagServiceMock{})
+	tagController := NewTagController(&service.TagServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTagResult(t, tc, tagController.Put)
@@ -326,7 +272,7 @@ func TestTagController_Remove(t *testing.T) {
 		},
 	}
 
-	tagController := NewTagController(&tagServiceMock{})
+	tagController := NewTagController(&service.TagServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTagResult(t, tc, tagController.Remove)
@@ -362,7 +308,7 @@ func TestTagController_Delete(t *testing.T) {
 		},
 	}
 
-	tagController := NewTagController(&tagServiceMock{})
+	tagController := NewTagController(&service.TagServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTagResult(t, tc, tagController.Delete)

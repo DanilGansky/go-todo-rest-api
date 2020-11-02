@@ -9,16 +9,16 @@ import (
 	"github.com/gorilla/mux"
 
 	tagHttp "github.com/danikg/go-todo-rest-api/internal/tag/controller/http"
-	tagRepo "github.com/danikg/go-todo-rest-api/internal/tag/repository"
+	tagRepo "github.com/danikg/go-todo-rest-api/internal/tag/repository/pg"
 	tagService "github.com/danikg/go-todo-rest-api/internal/tag/service"
 	todoItemHttp "github.com/danikg/go-todo-rest-api/internal/todoitem/controller/http"
-	todoItemRepo "github.com/danikg/go-todo-rest-api/internal/todoitem/repository"
+	todoItemRepo "github.com/danikg/go-todo-rest-api/internal/todoitem/repository/pg"
 	todoItemService "github.com/danikg/go-todo-rest-api/internal/todoitem/service"
 	todoListHttp "github.com/danikg/go-todo-rest-api/internal/todolist/controller/http"
-	todoListRepo "github.com/danikg/go-todo-rest-api/internal/todolist/repository"
+	todoListRepo "github.com/danikg/go-todo-rest-api/internal/todolist/repository/pg"
 	todoListService "github.com/danikg/go-todo-rest-api/internal/todolist/service"
 	userHttp "github.com/danikg/go-todo-rest-api/internal/user/controller/http"
-	userRepo "github.com/danikg/go-todo-rest-api/internal/user/repository"
+	userRepo "github.com/danikg/go-todo-rest-api/internal/user/repository/pg"
 	userService "github.com/danikg/go-todo-rest-api/internal/user/service"
 )
 

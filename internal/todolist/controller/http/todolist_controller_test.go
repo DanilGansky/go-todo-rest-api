@@ -2,11 +2,11 @@ package http
 
 import (
 	"encoding/json"
-	"errors"
 	. "net/http"
 	"testing"
 
 	"github.com/danikg/go-todo-rest-api/internal/models"
+	"github.com/danikg/go-todo-rest-api/internal/todolist/service"
 	"github.com/danikg/go-todo-rest-api/internal/utils/test"
 	"github.com/stretchr/testify/assert"
 )
@@ -21,57 +21,6 @@ type todoListTest struct {
 	statusCode      int
 	todoListResult  models.TodoList
 	todoListsResult []models.TodoList
-}
-
-type todoListServiceMock struct{}
-
-func (s *todoListServiceMock) GetAll(userID uint) ([]models.TodoList, error) {
-	if userID != 1 {
-		return []models.TodoList{}, errors.New("err")
-	}
-
-	todoLists := []models.TodoList{
-		models.TodoList{Name: "list1", UserID: 1},
-		models.TodoList{Name: "list2", UserID: 1},
-	}
-
-	todoLists[0].ID = 1
-	todoLists[1].ID = 2
-	return todoLists, nil
-}
-
-func (s *todoListServiceMock) GetSingle(id uint) (models.TodoList, error) {
-	if id != 1 {
-		return models.TodoList{}, errors.New("not found")
-	}
-
-	todoList := models.TodoList{Name: "list1", UserID: 1}
-	todoList.ID = 1
-	return todoList, nil
-}
-
-func (s *todoListServiceMock) Create(userID uint, todoList *models.TodoList) error {
-	if userID != 1 {
-		return errors.New("err")
-	}
-	return nil
-}
-
-func (s *todoListServiceMock) Update(id uint, todoListData *models.TodoList) (models.TodoList, error) {
-	if id != 1 {
-		return models.TodoList{}, errors.New("err")
-	}
-
-	todoList := models.TodoList{Name: "list1", UserID: 1}
-	todoList.ID = 1
-	return todoList, nil
-}
-
-func (s *todoListServiceMock) Delete(id uint) error {
-	if id != 1 {
-		return errors.New("err")
-	}
-	return nil
 }
 
 func compareTodoLists(t *testing.T, todoList1 models.TodoList, todoList2 models.TodoList) {
@@ -133,7 +82,7 @@ func TestTodoListController_GetAll(t *testing.T) {
 		},
 	}
 
-	todoListController := NewTodoListController(&todoListServiceMock{})
+	todoListController := NewTodoListController(&service.TodoListServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoListResult(t, tc, todoListController.GetAll)
@@ -186,7 +135,7 @@ func TestTodoListController_Post(t *testing.T) {
 		},
 	}
 
-	todoListController := NewTodoListController(&todoListServiceMock{})
+	todoListController := NewTodoListController(&service.TodoListServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoListResult(t, tc, todoListController.Post)
@@ -227,7 +176,7 @@ func TestTodoListController_GetSingle(t *testing.T) {
 		},
 	}
 
-	todoListController := NewTodoListController(&todoListServiceMock{})
+	todoListController := NewTodoListController(&service.TodoListServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoListResult(t, tc, todoListController.GetSingle)
@@ -280,7 +229,7 @@ func TestTodoListController_Put(t *testing.T) {
 		},
 	}
 
-	todoListController := NewTodoListController(&todoListServiceMock{})
+	todoListController := NewTodoListController(&service.TodoListServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoListResult(t, tc, todoListController.Put)
@@ -316,7 +265,7 @@ func TestTodoListController_Delete(t *testing.T) {
 		},
 	}
 
-	todoListController := NewTodoListController(&todoListServiceMock{})
+	todoListController := NewTodoListController(&service.TodoListServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoListResult(t, tc, todoListController.Delete)
