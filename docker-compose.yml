@@ -1,0 +1,29 @@
+version: "3"
+networks: 
+    go_pg_net:
+        driver: bridge
+
+services: 
+    web:
+        build: .
+        image: go-todo-rest-api
+        volumes: 
+            - ./:/app
+        ports: 
+            - "8000:8000"
+        depends_on:
+            - postgres
+        env_file: 
+            - .env 
+        networks: 
+            - go_pg_net
+    postgres:
+        image: postgres:alpine
+        environment: 
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_NAME}
+        ports: 
+            - "5432:5432"
+        networks: 
+            - go_pg_net
