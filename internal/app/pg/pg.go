@@ -28,7 +28,10 @@ func GetDB(cfg *config.Config) *gorm.DB {
 			log.Fatal("failed to connect db")
 		}
 
-		db.AutoMigrate(&models.User{}, &models.TodoList{}, &models.TodoItem{}, &models.Tag{})
+		db.AutoMigrate(&models.User{})
+		db.AutoMigrate(&models.TodoList{})
+		db.AutoMigrate(&models.TodoItem{})
+		db.AutoMigrate(&models.Tag{})
 	})
 	return db
 }
