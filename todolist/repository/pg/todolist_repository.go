@@ -1,4 +1,4 @@
-package repository
+package pg
 
 import (
 	"github.com/danikg/go-todo-rest-api/models"
