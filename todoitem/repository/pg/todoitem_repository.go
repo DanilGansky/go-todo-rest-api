@@ -18,13 +18,15 @@ func NewTodoItemRepository(conn *gorm.DB) *TodoItemRepository {
 // GetAll returns all todo items by todo list id
 func (t *TodoItemRepository) GetAll(listID uint) ([]models.TodoItem, error) {
 	todoItems := []models.TodoItem{}
-	return todoItems, t.Conn.Joins("TodoList").Preload("Tags").Find(&todoItems, "todo_list_id = ?", listID).Error
+	err := t.Conn.Joins("TodoList").Preload("Tags").Find(&todoItems, "todo_list_id = ?", listID).Error
+	return todoItems, err
 }
 
 // GetSingle returns a todo item by id
 func (t *TodoItemRepository) GetSingle(id uint) (models.TodoItem, error) {
 	todoItem := models.TodoItem{}
-	return todoItem, t.Conn.Joins("TodoList").Preload("Tags").First(&todoItem, id).Error
+	err := t.Conn.Joins("TodoList").Preload("Tags").First(&todoItem, id).Error
+	return todoItem, err
 }
 
 // Create creates a new todo item
@@ -39,12 +41,11 @@ func (t *TodoItemRepository) Update(id uint, todoItemData *models.TodoItem) (mod
 	if err != nil {
 		return todoItem, err
 	}
-	return todoItem, t.Conn.Model(&todoItem).Updates(
-		models.TodoItem{
+	err = t.Conn.Model(&todoItem).
+		Updates(models.TodoItem{
 			Title:       todoItemData.Title,
-			Description: todoItemData.Description,
-		},
-	).Error
+			Description: todoItemData.Description}).Error
+	return todoItem, err
 }
 
 // Delete removes the todo item

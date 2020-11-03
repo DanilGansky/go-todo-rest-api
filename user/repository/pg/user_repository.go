@@ -18,13 +18,15 @@ func NewUserRepository(conn *gorm.DB) *UserRepository {
 // GetAll returns all users from the db
 func (u *UserRepository) GetAll() ([]models.User, error) {
 	users := []models.User{}
-	return users, u.Conn.Preload("TodoLists").Find(&users).Error
+	err := u.Conn.Preload("TodoLists").Find(&users).Error
+	return users, err
 }
 
 // GetSingle returns a user by id
 func (u *UserRepository) GetSingle(id uint) (models.User, error) {
 	user := models.User{}
-	return user, u.Conn.Preload("TodoLists").First(&user, id).Error
+	err := u.Conn.Preload("TodoLists").First(&user, id).Error
+	return user, err
 }
 
 // Create creates a new user
@@ -38,7 +40,9 @@ func (u *UserRepository) Update(id uint, userData *models.User) (models.User, er
 	if err != nil {
 		return user, err
 	}
-	return user, u.Conn.Model(&user).Update("Username", userData.Username).Error
+
+	err = u.Conn.Model(&user).Update("Username", userData.Username).Error
+	return user, err
 }
 
 // Delete removes the user

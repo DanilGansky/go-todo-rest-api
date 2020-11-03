@@ -18,13 +18,15 @@ func NewTodoListRepository(conn *gorm.DB) *TodoListRepository {
 // GetAll returns all todo lists by user id
 func (t *TodoListRepository) GetAll(userID uint) ([]models.TodoList, error) {
 	todoLists := []models.TodoList{}
-	return todoLists, t.Conn.Find(&todoLists, "user_id = ?", userID).Error
+	err := t.Conn.Find(&todoLists, "user_id = ?", userID).Error
+	return todoLists, err
 }
 
 // GetSingle returns a todo list by id
 func (t *TodoListRepository) GetSingle(id uint) (models.TodoList, error) {
 	todoList := models.TodoList{}
-	return todoList, t.Conn.First(&todoList, id).Error
+	err := t.Conn.First(&todoList, id).Error
+	return todoList, err
 }
 
 // Create creates a new todo list
@@ -39,7 +41,9 @@ func (t *TodoListRepository) Update(id uint, todoListData *models.TodoList) (mod
 	if err != nil {
 		return todoList, err
 	}
-	return todoList, t.Conn.Model(&todoList).Update("Name", todoListData.Name).Error
+
+	err = t.Conn.Model(&todoList).Update("Name", todoListData.Name).Error
+	return todoList, err
 }
 
 // Delete removes the todo list

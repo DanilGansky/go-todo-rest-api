@@ -18,13 +18,15 @@ func NewTagRepository(conn *gorm.DB) *TagRepository {
 // GetAll returns all tags by todo item id
 func (t *TagRepository) GetAll(todoItem *models.TodoItem) ([]models.Tag, error) {
 	tags := []models.Tag{}
-	return tags, t.Conn.Model(&todoItem).Association("Tags").Find(&tags)
+	err := t.Conn.Model(&todoItem).Association("Tags").Find(&tags)
+	return tags, err
 }
 
 // GetSingle returns a tag by id
 func (t *TagRepository) GetSingle(id uint) (models.Tag, error) {
 	tag := models.Tag{}
-	return tag, t.Conn.First(&tag, id).Error
+	err := t.Conn.First(&tag, id).Error
+	return tag, err
 }
 
 // Create creates a new tag
@@ -38,7 +40,9 @@ func (t *TagRepository) Update(id uint, tagData *models.Tag) (models.Tag, error)
 	if err != nil {
 		return tag, err
 	}
-	return tag, t.Conn.Model(&tag).Update("text", tagData.Text).Error
+
+	err = t.Conn.Model(&tag).Update("text", tagData.Text).Error
+	return tag, err
 }
 
 // Remove removes the tag from the todo item
