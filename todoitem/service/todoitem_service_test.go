@@ -7,12 +7,12 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	tiMocks "github.com/danikg/go-todo-rest-api/todoitem/repository/mock"
-	tlMocks "github.com/danikg/go-todo-rest-api/todolist/repository/mock"
+	tiMock "github.com/danikg/go-todo-rest-api/todoitem/repository/mock"
+	tlMock "github.com/danikg/go-todo-rest-api/todolist/repository/mock"
 )
 
 func TestTodoItemService_GetAll(t *testing.T) {
-	todoItemService := NewTodoItemService(&tiMocks.TodoItemRepositoryMock{}, &tlMocks.TodoListRepositoryMock{})
+	todoItemService := NewTodoItemService(&tiMock.TodoItemRepositoryMock{}, &tlMock.TodoListRepositoryMock{})
 	todoItems, err := todoItemService.GetAll(1)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, todoItems)
@@ -23,7 +23,7 @@ func TestTodoItemService_GetAll(t *testing.T) {
 }
 
 func TestTodoItemService_GetSingle(t *testing.T) {
-	todoItemService := NewTodoItemService(&tiMocks.TodoItemRepositoryMock{}, &tlMocks.TodoListRepositoryMock{})
+	todoItemService := NewTodoItemService(&tiMock.TodoItemRepositoryMock{}, &tlMock.TodoListRepositoryMock{})
 	todoItem, err := todoItemService.GetSingle(1)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, todoItem)
@@ -34,7 +34,7 @@ func TestTodoItemService_GetSingle(t *testing.T) {
 }
 
 func TestTodoItemService_Create(t *testing.T) {
-	todoItemService := NewTodoItemService(&tiMocks.TodoItemRepositoryMock{}, &tlMocks.TodoListRepositoryMock{})
+	todoItemService := NewTodoItemService(&tiMock.TodoItemRepositoryMock{}, &tlMock.TodoListRepositoryMock{})
 	todoItem := models.TodoItem{Title: "item"}
 	todoItem.ID = 1
 
@@ -46,7 +46,7 @@ func TestTodoItemService_Create(t *testing.T) {
 }
 
 func TestTodoItemService_Update(t *testing.T) {
-	todoItemService := NewTodoItemService(&tiMocks.TodoItemRepositoryMock{}, &tlMocks.TodoListRepositoryMock{})
+	todoItemService := NewTodoItemService(&tiMock.TodoItemRepositoryMock{}, &tlMock.TodoListRepositoryMock{})
 	todoItem := models.TodoItem{Title: "item"}
 	todoItem.ID = 1
 
@@ -60,7 +60,7 @@ func TestTodoItemService_Update(t *testing.T) {
 }
 
 func TestTodoItemService_Delete(t *testing.T) {
-	todoItemService := NewTodoItemService(&tiMocks.TodoItemRepositoryMock{}, &tlMocks.TodoListRepositoryMock{})
+	todoItemService := NewTodoItemService(&tiMock.TodoItemRepositoryMock{}, &tlMock.TodoListRepositoryMock{})
 	assert.NoError(t, todoItemService.Delete(1))
 	assert.Error(t, todoItemService.Delete(2))
 }

@@ -7,12 +7,12 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	tlMocks "github.com/danikg/go-todo-rest-api/todolist/repository/mock"
-	userMocks "github.com/danikg/go-todo-rest-api/user/repository/mock"
+	tlMock "github.com/danikg/go-todo-rest-api/todolist/repository/mock"
+	userMock "github.com/danikg/go-todo-rest-api/user/repository/mock"
 )
 
 func TestTodoListService_GetAll(t *testing.T) {
-	todoListService := NewTodoListService(&userMocks.UserRepositoryMock{}, &tlMocks.TodoListRepositoryMock{})
+	todoListService := NewTodoListService(&userMock.UserRepositoryMock{}, &tlMock.TodoListRepositoryMock{})
 	todoLists, err := todoListService.GetAll(1)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, todoLists)
@@ -23,7 +23,7 @@ func TestTodoListService_GetAll(t *testing.T) {
 }
 
 func TestTodoListService_GetSingle(t *testing.T) {
-	todoListService := NewTodoListService(&userMocks.UserRepositoryMock{}, &tlMocks.TodoListRepositoryMock{})
+	todoListService := NewTodoListService(&userMock.UserRepositoryMock{}, &tlMock.TodoListRepositoryMock{})
 	todoList, err := todoListService.GetSingle(1)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, todoList)
@@ -34,7 +34,7 @@ func TestTodoListService_GetSingle(t *testing.T) {
 }
 
 func TestTodoListService_Create(t *testing.T) {
-	todoListService := NewTodoListService(&userMocks.UserRepositoryMock{}, &tlMocks.TodoListRepositoryMock{})
+	todoListService := NewTodoListService(&userMock.UserRepositoryMock{}, &tlMock.TodoListRepositoryMock{})
 	todoList := models.TodoList{Name: "list"}
 	todoList.ID = 1
 
@@ -46,7 +46,7 @@ func TestTodoListService_Create(t *testing.T) {
 }
 
 func TestTodoListService_Update(t *testing.T) {
-	todoListService := NewTodoListService(&userMocks.UserRepositoryMock{}, &tlMocks.TodoListRepositoryMock{})
+	todoListService := NewTodoListService(&userMock.UserRepositoryMock{}, &tlMock.TodoListRepositoryMock{})
 	todoList := models.TodoList{Name: "list"}
 	todoList.ID = 1
 
@@ -60,7 +60,7 @@ func TestTodoListService_Update(t *testing.T) {
 }
 
 func TestTodoListService_Delete(t *testing.T) {
-	todoListService := NewTodoListService(&userMocks.UserRepositoryMock{}, &tlMocks.TodoListRepositoryMock{})
+	todoListService := NewTodoListService(&userMock.UserRepositoryMock{}, &tlMock.TodoListRepositoryMock{})
 	assert.NoError(t, todoListService.Delete(1))
 	assert.Error(t, todoListService.Delete(2))
 }

@@ -6,12 +6,12 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/danikg/go-todo-rest-api/models"
-	tagMocks "github.com/danikg/go-todo-rest-api/tag/repository/mock"
-	tiMocks "github.com/danikg/go-todo-rest-api/todoitem/repository/mock"
+	tagMock "github.com/danikg/go-todo-rest-api/tag/repository/mock"
+	tiMock "github.com/danikg/go-todo-rest-api/todoitem/repository/mock"
 )
 
 func TestTagService_GetAll(t *testing.T) {
-	tagService := NewTagService(&tagMocks.TagRepositoryMock{}, &tiMocks.TodoItemRepositoryMock{})
+	tagService := NewTagService(&tagMock.TagRepositoryMock{}, &tiMock.TodoItemRepositoryMock{})
 	tags, err := tagService.GetAll(1)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, tags)
@@ -22,7 +22,7 @@ func TestTagService_GetAll(t *testing.T) {
 }
 
 func TestTagService_GetSingle(t *testing.T) {
-	tagService := NewTagService(&tagMocks.TagRepositoryMock{}, &tiMocks.TodoItemRepositoryMock{})
+	tagService := NewTagService(&tagMock.TagRepositoryMock{}, &tiMock.TodoItemRepositoryMock{})
 	tag, err := tagService.GetSingle(1)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, tag)
@@ -33,7 +33,7 @@ func TestTagService_GetSingle(t *testing.T) {
 }
 
 func TestTagService_Create(t *testing.T) {
-	tagService := NewTagService(&tagMocks.TagRepositoryMock{}, &tiMocks.TodoItemRepositoryMock{})
+	tagService := NewTagService(&tagMock.TagRepositoryMock{}, &tiMock.TodoItemRepositoryMock{})
 	tag := models.Tag{Text: "tag"}
 	tag.ID = 1
 
@@ -45,7 +45,7 @@ func TestTagService_Create(t *testing.T) {
 }
 
 func TestTagService_Update(t *testing.T) {
-	tagService := NewTagService(&tagMocks.TagRepositoryMock{}, &tiMocks.TodoItemRepositoryMock{})
+	tagService := NewTagService(&tagMock.TagRepositoryMock{}, &tiMock.TodoItemRepositoryMock{})
 	tag := models.Tag{Text: "tag"}
 	tag.ID = 1
 
@@ -59,14 +59,14 @@ func TestTagService_Update(t *testing.T) {
 }
 
 func TestTagService_Remove(t *testing.T) {
-	tagService := NewTagService(&tagMocks.TagRepositoryMock{}, &tiMocks.TodoItemRepositoryMock{})
+	tagService := NewTagService(&tagMock.TagRepositoryMock{}, &tiMock.TodoItemRepositoryMock{})
 	assert.NoError(t, tagService.Remove(1, 1))
 	assert.Error(t, tagService.Remove(2, 1))
 	assert.Error(t, tagService.Remove(1, 2))
 }
 
 func TestTagService_Delete(t *testing.T) {
-	tagService := NewTagService(&tagMocks.TagRepositoryMock{}, &tiMocks.TodoItemRepositoryMock{})
+	tagService := NewTagService(&tagMock.TagRepositoryMock{}, &tiMock.TodoItemRepositoryMock{})
 	assert.NoError(t, tagService.Delete(1))
 	assert.Error(t, tagService.Delete(2))
 }
