@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/danikg/go-todo-rest-api/models"
-	"github.com/danikg/go-todo-rest-api/todoitem/service"
+	"github.com/danikg/go-todo-rest-api/todoitem/service/mock"
 	"github.com/danikg/go-todo-rest-api/utils/test"
 	"github.com/stretchr/testify/assert"
 )
@@ -86,7 +86,7 @@ func TestTodoItemController_GetAll(t *testing.T) {
 		},
 	}
 
-	todoItemController := NewTodoItemController(&service.TodoItemServiceMock{})
+	todoItemController := NewTodoItemController(&mock.TodoItemServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoItemResult(t, tc, todoItemController.GetAll)
@@ -139,7 +139,7 @@ func TestTodoItemController_Post(t *testing.T) {
 		},
 	}
 
-	todoItemController := NewTodoItemController(&service.TodoItemServiceMock{})
+	todoItemController := NewTodoItemController(&mock.TodoItemServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoItemResult(t, tc, todoItemController.Post)
@@ -180,7 +180,7 @@ func TestTodoItemController_GetSingle(t *testing.T) {
 		},
 	}
 
-	todoItemController := NewTodoItemController(&service.TodoItemServiceMock{})
+	todoItemController := NewTodoItemController(&mock.TodoItemServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoItemResult(t, tc, todoItemController.GetSingle)
@@ -233,7 +233,7 @@ func TestTodoItemController_Put(t *testing.T) {
 		},
 	}
 
-	todoItemController := NewTodoItemController(&service.TodoItemServiceMock{})
+	todoItemController := NewTodoItemController(&mock.TodoItemServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoItemResult(t, tc, todoItemController.Put)
@@ -269,7 +269,7 @@ func TestTodoItemController_Delete(t *testing.T) {
 		},
 	}
 
-	todoItemController := NewTodoItemController(&service.TodoItemServiceMock{})
+	todoItemController := NewTodoItemController(&mock.TodoItemServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoItemResult(t, tc, todoItemController.Delete)

@@ -1,4 +1,4 @@
-package service
+package mock
 
 import (
 	"errors"
@@ -6,13 +6,13 @@ import (
 	"github.com/danikg/go-todo-rest-api/models"
 )
 
-// UserServiceMock ...
-type UserServiceMock struct {
+// UserRepositoryMock ...
+type UserRepositoryMock struct {
 	GenerateErr bool
 }
 
 // GetAll ...
-func (s *UserServiceMock) GetAll() ([]models.User, error) {
+func (s *UserRepositoryMock) GetAll() ([]models.User, error) {
 	if s.GenerateErr {
 		return []models.User{}, errors.New("err")
 	}
@@ -28,7 +28,7 @@ func (s *UserServiceMock) GetAll() ([]models.User, error) {
 }
 
 // GetSingle ...
-func (s *UserServiceMock) GetSingle(id uint) (models.User, error) {
+func (s *UserRepositoryMock) GetSingle(id uint) (models.User, error) {
 	if id != 1 {
 		return models.User{}, errors.New("err")
 	}
@@ -39,7 +39,7 @@ func (s *UserServiceMock) GetSingle(id uint) (models.User, error) {
 }
 
 // Create ...
-func (s *UserServiceMock) Create(user *models.User) error {
+func (s *UserRepositoryMock) Create(user *models.User) error {
 	if s.GenerateErr {
 		return errors.New("err")
 	}
@@ -47,7 +47,7 @@ func (s *UserServiceMock) Create(user *models.User) error {
 }
 
 // Update ...
-func (s *UserServiceMock) Update(id uint, userData *models.User) (models.User, error) {
+func (s *UserRepositoryMock) Update(id uint, userData *models.User) (models.User, error) {
 	if id != 1 {
 		return models.User{}, errors.New("err")
 	}
@@ -58,7 +58,7 @@ func (s *UserServiceMock) Update(id uint, userData *models.User) (models.User, e
 }
 
 // Delete ...
-func (s *UserServiceMock) Delete(id uint) error {
+func (s *UserRepositoryMock) Delete(id uint) error {
 	if id != 1 {
 		return errors.New("err")
 	}

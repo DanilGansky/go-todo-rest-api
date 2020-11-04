@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/danikg/go-todo-rest-api/models"
-	"github.com/danikg/go-todo-rest-api/todolist/service"
+	"github.com/danikg/go-todo-rest-api/todolist/service/mock"
 	"github.com/danikg/go-todo-rest-api/utils/test"
 	"github.com/stretchr/testify/assert"
 )
@@ -82,7 +82,7 @@ func TestTodoListController_GetAll(t *testing.T) {
 		},
 	}
 
-	todoListController := NewTodoListController(&service.TodoListServiceMock{})
+	todoListController := NewTodoListController(&mock.TodoListServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoListResult(t, tc, todoListController.GetAll)
@@ -135,7 +135,7 @@ func TestTodoListController_Post(t *testing.T) {
 		},
 	}
 
-	todoListController := NewTodoListController(&service.TodoListServiceMock{})
+	todoListController := NewTodoListController(&mock.TodoListServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoListResult(t, tc, todoListController.Post)
@@ -176,7 +176,7 @@ func TestTodoListController_GetSingle(t *testing.T) {
 		},
 	}
 
-	todoListController := NewTodoListController(&service.TodoListServiceMock{})
+	todoListController := NewTodoListController(&mock.TodoListServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoListResult(t, tc, todoListController.GetSingle)
@@ -229,7 +229,7 @@ func TestTodoListController_Put(t *testing.T) {
 		},
 	}
 
-	todoListController := NewTodoListController(&service.TodoListServiceMock{})
+	todoListController := NewTodoListController(&mock.TodoListServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoListResult(t, tc, todoListController.Put)
@@ -265,7 +265,7 @@ func TestTodoListController_Delete(t *testing.T) {
 		},
 	}
 
-	todoListController := NewTodoListController(&service.TodoListServiceMock{})
+	todoListController := NewTodoListController(&mock.TodoListServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTodoListResult(t, tc, todoListController.Delete)

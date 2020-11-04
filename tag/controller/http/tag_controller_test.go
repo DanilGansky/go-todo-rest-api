@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/danikg/go-todo-rest-api/models"
-	"github.com/danikg/go-todo-rest-api/tag/service"
+	"github.com/danikg/go-todo-rest-api/tag/service/mock"
 	"github.com/danikg/go-todo-rest-api/utils/test"
 	"github.com/stretchr/testify/assert"
 )
@@ -81,7 +81,7 @@ func TestTagController_GetAll(t *testing.T) {
 		},
 	}
 
-	tagController := NewTagController(&service.TagServiceMock{})
+	tagController := NewTagController(&mock.TagServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTagResult(t, tc, tagController.GetAll)
@@ -134,7 +134,7 @@ func TestTagController_Post(t *testing.T) {
 		},
 	}
 
-	tagController := NewTagController(&service.TagServiceMock{})
+	tagController := NewTagController(&mock.TagServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTagResult(t, tc, tagController.Post)
@@ -175,7 +175,7 @@ func TestTagController_GetSingle(t *testing.T) {
 		},
 	}
 
-	tagController := NewTagController(&service.TagServiceMock{})
+	tagController := NewTagController(&mock.TagServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTagResult(t, tc, tagController.GetSingle)
@@ -228,7 +228,7 @@ func TestTagController_Put(t *testing.T) {
 		},
 	}
 
-	tagController := NewTagController(&service.TagServiceMock{})
+	tagController := NewTagController(&mock.TagServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTagResult(t, tc, tagController.Put)
@@ -272,7 +272,7 @@ func TestTagController_Remove(t *testing.T) {
 		},
 	}
 
-	tagController := NewTagController(&service.TagServiceMock{})
+	tagController := NewTagController(&mock.TagServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTagResult(t, tc, tagController.Remove)
@@ -308,7 +308,7 @@ func TestTagController_Delete(t *testing.T) {
 		},
 	}
 
-	tagController := NewTagController(&service.TagServiceMock{})
+	tagController := NewTagController(&mock.TagServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testTagResult(t, tc, tagController.Delete)

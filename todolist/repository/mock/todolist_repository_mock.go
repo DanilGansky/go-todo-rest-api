@@ -1,4 +1,4 @@
-package service
+package mock
 
 import (
 	"errors"
@@ -6,11 +6,11 @@ import (
 	"github.com/danikg/go-todo-rest-api/models"
 )
 
-// TodoListServiceMock ...
-type TodoListServiceMock struct{}
+// TodoListRepositoryMock ...
+type TodoListRepositoryMock struct{}
 
 // GetAll ...
-func (s *TodoListServiceMock) GetAll(userID uint) ([]models.TodoList, error) {
+func (s *TodoListRepositoryMock) GetAll(userID uint) ([]models.TodoList, error) {
 	if userID != 1 {
 		return []models.TodoList{}, errors.New("err")
 	}
@@ -26,7 +26,7 @@ func (s *TodoListServiceMock) GetAll(userID uint) ([]models.TodoList, error) {
 }
 
 // GetSingle ...
-func (s *TodoListServiceMock) GetSingle(id uint) (models.TodoList, error) {
+func (s *TodoListRepositoryMock) GetSingle(id uint) (models.TodoList, error) {
 	if id != 1 {
 		return models.TodoList{}, errors.New("not found")
 	}
@@ -37,7 +37,7 @@ func (s *TodoListServiceMock) GetSingle(id uint) (models.TodoList, error) {
 }
 
 // Create ...
-func (s *TodoListServiceMock) Create(userID uint, todoList *models.TodoList) error {
+func (s *TodoListRepositoryMock) Create(userID uint, todoList *models.TodoList) error {
 	if userID != 1 {
 		return errors.New("err")
 	}
@@ -45,7 +45,7 @@ func (s *TodoListServiceMock) Create(userID uint, todoList *models.TodoList) err
 }
 
 // Update ...
-func (s *TodoListServiceMock) Update(id uint, todoListData *models.TodoList) (models.TodoList, error) {
+func (s *TodoListRepositoryMock) Update(id uint, todoListData *models.TodoList) (models.TodoList, error) {
 	if id != 1 {
 		return models.TodoList{}, errors.New("err")
 	}
@@ -56,7 +56,7 @@ func (s *TodoListServiceMock) Update(id uint, todoListData *models.TodoList) (mo
 }
 
 // Delete ...
-func (s *TodoListServiceMock) Delete(id uint) error {
+func (s *TodoListRepositoryMock) Delete(id uint) error {
 	if id != 1 {
 		return errors.New("err")
 	}

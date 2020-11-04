@@ -23,7 +23,7 @@ func NewUserController(userService models.IUserService) *UserController {
 func (c *UserController) GetAll(w http.ResponseWriter, r *http.Request) {
 	users, err := c.UserService.GetAll()
 	if err != nil {
-		response.SendErrorResponse(w, http.StatusNotFound, err)
+		response.SendErrorResponse(w, http.StatusInternalServerError, err)
 		return
 	}
 

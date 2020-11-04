@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/danikg/go-todo-rest-api/models"
-	"github.com/danikg/go-todo-rest-api/user/service"
+	"github.com/danikg/go-todo-rest-api/user/service/mock"
 	"github.com/danikg/go-todo-rest-api/utils/test"
 	"github.com/stretchr/testify/assert"
 )
@@ -69,15 +69,15 @@ func TestUserController_GetAll(t *testing.T) {
 			path:       "/users",
 			route:      "/users",
 			shouldPass: false,
-			statusCode: StatusNotFound,
+			statusCode: StatusInternalServerError,
 		},
 	}
 
-	userController := NewUserController(&service.UserServiceMock{})
+	userController := NewUserController(&mock.UserServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			if !tc.shouldPass {
-				userController = NewUserController(&service.UserServiceMock{GenerateErr: true})
+				userController = NewUserController(&mock.UserServiceMock{GenerateErr: true})
 			}
 
 			testUserResult(t, tc, userController.GetAll)
@@ -121,11 +121,11 @@ func TestUserController_Post(t *testing.T) {
 		},
 	}
 
-	userController := NewUserController(&service.UserServiceMock{})
+	userController := NewUserController(&mock.UserServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			if !tc.shouldPass {
-				userController = NewUserController(&service.UserServiceMock{GenerateErr: true})
+				userController = NewUserController(&mock.UserServiceMock{GenerateErr: true})
 			}
 
 			testUserResult(t, tc, userController.Post)
@@ -166,7 +166,7 @@ func TestUserController_GetSingle(t *testing.T) {
 		},
 	}
 
-	userController := NewUserController(&service.UserServiceMock{})
+	userController := NewUserController(&mock.UserServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testUserResult(t, tc, userController.GetSingle)
@@ -219,7 +219,7 @@ func TestUserController_Put(t *testing.T) {
 		},
 	}
 
-	userController := NewUserController(&service.UserServiceMock{})
+	userController := NewUserController(&mock.UserServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testUserResult(t, tc, userController.Put)
@@ -255,7 +255,7 @@ func TestUserController_Delete(t *testing.T) {
 		},
 	}
 
-	userController := NewUserController(&service.UserServiceMock{})
+	userController := NewUserController(&mock.UserServiceMock{})
 	for _, tc := range tests {
 		t.Run(tc.title, func(t *testing.T) {
 			testUserResult(t, tc, userController.Delete)
