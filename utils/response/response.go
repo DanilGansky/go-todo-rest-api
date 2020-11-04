@@ -35,5 +35,5 @@ func SendErrorResponse(w http.ResponseWriter, status int, err error) {
 	w.WriteHeader(status)
 	httpErr := NewHTTPError(status, err.Error())
 	httpErrJSON, _ := json.Marshal(httpErr)
-	w.Write([]byte(httpErrJSON))
+	w.Write(httpErrJSON)
 }
