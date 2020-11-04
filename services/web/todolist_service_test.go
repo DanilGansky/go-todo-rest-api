@@ -5,7 +5,7 @@ import (
 
 	"github.com/danikg/go-todo-rest-api/models"
 
-	mocks "github.com/danikg/go-todo-rest-api/repositories/mocks"
+	"github.com/danikg/go-todo-rest-api/repositories/mocks"
 	"github.com/stretchr/testify/assert"
 )
 

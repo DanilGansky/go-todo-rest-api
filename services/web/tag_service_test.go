@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/danikg/go-todo-rest-api/models"
-	mocks "github.com/danikg/go-todo-rest-api/repositories/mocks"
+	"github.com/danikg/go-todo-rest-api/repositories/mocks"
 )
 
 func TestTagService_GetAll(t *testing.T) {

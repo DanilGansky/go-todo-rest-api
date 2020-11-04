@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	mocks "github.com/danikg/go-todo-rest-api/repositories/mocks"
+	"github.com/danikg/go-todo-rest-api/repositories/mocks"
 )
 
 func TestTodoItemService_GetAll(t *testing.T) {
